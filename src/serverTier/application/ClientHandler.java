@@ -1,5 +1,8 @@
 package serverTier.application;
 
+import serverTier.model.PictoProtocols;
+import serverTier.model.PictoServer;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;

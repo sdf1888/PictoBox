@@ -1,5 +1,7 @@
 package serverTier.model;
 
+import serverTier.application.ClientHandler;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
