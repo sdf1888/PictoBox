@@ -25,6 +25,7 @@ public class ServerRun{
     public static void main(String[] args) {
         try{
             int port = Integer.parseInt(args[0]);
+            ServerRun server = new ServerRun(port);
         }catch(Exception e){
             System.out.println("Expected one input containing port");
             System.out.println("ex: java ServerRun 1234");

@@ -1,11 +1,11 @@
 package serverTier.application;
 
-import clientTier.model.Client;
+import clientTier.model.ClientSend;
 import java.util.ArrayList;
 
 public class Lobby {
 
-    private static ArrayList<Client> users;
+    private static ArrayList<ClientSend> users;
 
     /**
      * Creates a new lobby list, used when a new room is created.
@@ -18,7 +18,7 @@ public class Lobby {
      * used when a user enters the room
      * @param user the user to add to a room
      */
-    public void addUser(Client user){
+    public void addUser(ClientSend user){
         this.users.add(user);
     }
 
@@ -26,7 +26,7 @@ public class Lobby {
      * used to remove a user from a room when they leave / disconnect from a room
      * @param user the user to remove from the room's members
      */
-    public void removeUser(Client user){
+    public void removeUser(ClientSend user){
         this.users.remove(user);
     }
 }
