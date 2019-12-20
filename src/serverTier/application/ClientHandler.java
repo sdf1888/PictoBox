@@ -1,6 +1,7 @@
 package serverTier.application;
 
 import commonTier.PictoProtocols;
+import serverTier.model.Room;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ public class ClientHandler implements Runnable{
     private PrintWriter printWriter;
     private Scanner scanner;
     private boolean isConnected;
+    private Room room;
 
     public ClientHandler(Socket client){
         this.client = client;
@@ -21,6 +23,7 @@ public class ClientHandler implements Runnable{
             this.printWriter = new PrintWriter(client.getOutputStream());
             this.scanner = new Scanner(client.getInputStream());
             this.isConnected = true;
+            this.room = null;
             printWriter.println(PictoProtocols.WELCOME + " Connected to the hub server!");
             printWriter.flush();
         }catch (IOException io){
@@ -36,9 +39,8 @@ public class ClientHandler implements Runnable{
             switch(msg.split(" ")[0]){
                 case PictoProtocols.JOIN:
                     //TODO
-                    printWriter.println("achieved"); //RM
-                    printWriter.flush();
-                    System.out.println("Join recieved");
+                    //When user joins a room, if they're in a room already they must disconnect from their current room
+                    //Check for if room exists, if not inform client
                     break;
                 case PictoProtocols.CREATE:
                     //TODO
