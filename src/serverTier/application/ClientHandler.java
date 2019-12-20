@@ -1,82 +1,61 @@
 package serverTier.application;
 
-import serverTier.model.PictoProtocols;
-import serverTier.model.PictoServer;
+import commonTier.PictoProtocols;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ClientHandler implements Runnable{
-    private PictoServer server;
+
     private Socket client;
-    private PrintWriter clientPW;
-    private Scanner clientScanner;
-    private String username;
-    private ArrayList<ClientHandler> otherUsers; //Saved to display in GUI
+    //Add attr for server reference
+    private PrintWriter printWriter;
+    private Scanner scanner;
+    private boolean isConnected;
 
-    /**
-     * ClientHandler constructor, accepts a client and sends a welcome message.
-     * @param server reference back to the server
-     */
-    public ClientHandler(PictoServer server, Socket client, String room, ArrayList<ClientHandler> users) {
+    public ClientHandler(Socket client){
+        this.client = client;
         try {
-            this.server = server;
-            this.otherUsers = users;
-            this.client = client;
-            this.clientPW = new PrintWriter(client.getOutputStream());
-            this.clientScanner = new Scanner(client.getInputStream());
-
-            String welcomeMSG = PictoProtocols.WELCOME + " Connected:" + room + ", [";
-            for (ClientHandler ch: users){
-                welcomeMSG = welcomeMSG.concat("   " + ch.getUsername());
-            }
-            this.clientPW.println(welcomeMSG);
-            this.clientPW.flush();
-
-            String[] line = clientScanner.nextLine().split(" ");
-            this.username = line[1];
-
-
+            this.printWriter = new PrintWriter(client.getOutputStream());
+            this.scanner = new Scanner(client.getInputStream());
+            this.isConnected = true;
+            printWriter.println(PictoProtocols.WELCOME + "Connected to the hub server!");
+            printWriter.flush();
         }catch (IOException io){
-            System.out.println("IOException in ClientHandler - constructor");
-            io.getMessage();
+            System.out.println(io.getLocalizedMessage());
         }
     }
 
-    public String getUsername(){
-        return username;
-    }
-
-    public void sendMSG(String msg){
-        clientPW.println(msg);
-        clientPW.flush();
-
-        //Will replace w/ a call to refresh gui w/ updated labels
-    }
-
     @Override
-    public void run() {
-        while (clientScanner.nextLine() != null) {
-            String[] line = clientScanner.nextLine().split(" ");
-            switch (line[0]) {
-                case PictoProtocols.JOINED:
-
+    public void run(){
+        String msg;
+        while(isConnected){
+            msg = scanner.nextLine();
+            switch(msg.split(" ")[0]){
+                case PictoProtocols.JOIN:
+                    //TODO
                     break;
-
+                case PictoProtocols.CREATE:
+                    //TODO
+                    break;
+                case PictoProtocols.ROOMS:
+                    //TODO
+                    break;
                 case PictoProtocols.DISCONNECT:
-
+                    try {
+                        this.scanner.close();
+                        this.printWriter.close();
+                        this.client.close();
+                    }catch (IOException io){
+                        System.out.println(io.getLocalizedMessage());
+                    }
+                    this.isConnected = false;
                     break;
-
-                case PictoProtocols.MSG:
-                    //server.sendMSGOUT(String.join(" ", ));
-                    break;
-
-                case PictoProtocols.ERR:
-
+                default:
+                    printWriter.println(PictoProtocols.ERR + " unknown command, use '/help' to see the available commands");
+                    printWriter.flush();
                     break;
             }
         }
