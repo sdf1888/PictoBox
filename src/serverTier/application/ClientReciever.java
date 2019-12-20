@@ -21,12 +21,15 @@ public class ClientReciever implements Runnable{
     @Override
     public void run() {
 
-        ClientHandler temp;
-
+        ClientHandler chTemp;
+        Thread tempThread;
+        System.out.println("Server Connection: Open");
         while(true){
             try {
-                 temp = new ClientHandler(server.accept());
-                 temp.run();
+                chTemp = new ClientHandler(server.accept());
+                System.out.println("Client Connected!");
+                 tempThread = new Thread(chTemp);
+                 tempThread.start();
             }catch (IOException io){
                 System.out.println(io.getLocalizedMessage());
             }

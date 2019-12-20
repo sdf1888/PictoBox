@@ -21,7 +21,7 @@ public class ClientHandler implements Runnable{
             this.printWriter = new PrintWriter(client.getOutputStream());
             this.scanner = new Scanner(client.getInputStream());
             this.isConnected = true;
-            printWriter.println(PictoProtocols.WELCOME + "Connected to the hub server!");
+            printWriter.println(PictoProtocols.WELCOME + " Connected to the hub server!");
             printWriter.flush();
         }catch (IOException io){
             System.out.println(io.getLocalizedMessage());
@@ -36,6 +36,9 @@ public class ClientHandler implements Runnable{
             switch(msg.split(" ")[0]){
                 case PictoProtocols.JOIN:
                     //TODO
+                    printWriter.println("achieved"); //RM
+                    printWriter.flush();
+                    System.out.println("Join recieved");
                     break;
                 case PictoProtocols.CREATE:
                     //TODO

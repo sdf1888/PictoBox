@@ -8,12 +8,14 @@ public class ServerRun{
 
     private ServerSocket serverSocket;
     private ClientReciever clientReciever;
+    private Thread crThread;
 
     public ServerRun(int port){
         try {
             this.serverSocket = new ServerSocket(port);
             this.clientReciever = new ClientReciever(serverSocket);
-            this.clientReciever.run();
+            this.crThread = new Thread(clientReciever);
+            this.crThread.start();
         } catch (UnknownHostException unkHost) {
             System.out.println(unkHost.getLocalizedMessage());
         } catch (IOException io) {

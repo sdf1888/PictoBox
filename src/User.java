@@ -11,14 +11,18 @@ public class User {
     private String name;
     private ClientSend clientSend;
     private ClientRecieve clientRecieve;
+    private Thread csThread;
+    private Thread crThread;
 
     public User(int port, String hostname, String name){
         try {
             this.socket = new Socket(hostname, port);
             this.clientSend = new ClientSend(socket, name);
             this.clientRecieve = new ClientRecieve(socket);
-            clientSend.run();
-            clientRecieve.run();
+            this.csThread = new Thread(clientSend);
+            this.crThread = new Thread(clientRecieve);
+            this.csThread.start();
+            this.crThread.start();
         }catch (IOException io){
             System.out.println(io.getLocalizedMessage());
         }
