@@ -30,12 +30,8 @@ public class ClientSend implements Runnable{
         String msg;
         while (socket.isConnected()) {
             msg = scanner.nextLine();
-            if(msg.startsWith(PictoProtocols.HELP)){
-                System.out.println(PictoProtocols.CREATE + ", " + PictoProtocols.JOIN + ", " + PictoProtocols.ROOMS + ", " + PictoProtocols.DISCONNECT);
-            }else {
-                printWriter.println(msg);
-                printWriter.flush();
-            }
+            printWriter.println(msg);
+            printWriter.flush();
         }
     }
 }

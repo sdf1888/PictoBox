@@ -29,12 +29,6 @@ public interface PictoProtocols {
     public static final String DISCONNECT = "/disconnect";
 
     /**
-     * Displays a list of the protocol commands
-     * Usage: "HELP"
-     */
-    public static final String HELP = "/help";
-
-    /**
      * Sent from client to request a list of rooms
      * Usage: "ROOMS"
      */
