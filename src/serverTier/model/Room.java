@@ -22,6 +22,6 @@ public class Room {
         this.clients.remove(client);
     }
 
-
+    public String getName() { return this.roomName; }
 
 }
