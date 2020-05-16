@@ -1,4 +1,5 @@
 import serverTier.application.ClientReciever;
+import serverTier.application.Rooms;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -22,7 +23,6 @@ public class ServerRun{
             System.out.println(io.getLocalizedMessage());
         }
     }
-
 
     public static void main(String[] args) {
         try{

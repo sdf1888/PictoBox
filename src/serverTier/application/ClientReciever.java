@@ -3,9 +3,13 @@ package serverTier.application;
 import java.io.IOException;
 import java.net.ServerSocket;
 
+/**
+ * Responsible for acceping users into the system
+ */
 public class ClientReciever implements Runnable{
 
     public ServerSocket server;
+    private Rooms rooms;
 
     /**
      * ClientReciever constructor
@@ -13,6 +17,7 @@ public class ClientReciever implements Runnable{
      */
     public ClientReciever(ServerSocket server) {
         this.server = server;
+        this.rooms = new Rooms();
     }
 
     /**
@@ -24,9 +29,9 @@ public class ClientReciever implements Runnable{
         ClientHandler chTemp;
         Thread tempThread;
         System.out.println("Server Connection: Open");
-        while(true){
+        while(true){ //Change to stop when shutting down
             try {
-                chTemp = new ClientHandler(server.accept());
+                chTemp = new ClientHandler(server.accept(), rooms);
                 System.out.println("Client Connected!");
                  tempThread = new Thread(chTemp);
                  tempThread.start();

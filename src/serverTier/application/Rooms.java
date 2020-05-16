@@ -13,15 +13,20 @@ public class Rooms {
         this.rooms = new HashMap<>();
     }
 
-    public void addRoom(Room room){
-        this.rooms.put(room.getName(), room);
+    /**
+     * Creates a new room and adds it to the map
+     * generates a port for a room
+     * @param name
+     */
+    public void addRoom(String name){
+        this.rooms.put(name, new Room(name));
     }
 
-    public void removeRoom(Room room){
-        this.rooms.remove(room.getName());
+    public void removeRoom(String name){
+        this.rooms.remove(name);
     }
 
-    public Room getRoom(String roomName){
-        return this.rooms.get(roomName);
+    public int getRoomPort(String roomName){
+        return this.rooms.get(roomName).getPort();
     }
 }

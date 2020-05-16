@@ -17,7 +17,7 @@ public class ClientHandler implements Runnable{
     private boolean isConnected;
     private Room room;
 
-    public ClientHandler(Socket client){
+    public ClientHandler(Socket client, Rooms rooms){
         this.client = client;
         try {
             this.printWriter = new PrintWriter(client.getOutputStream());
@@ -49,15 +49,28 @@ public class ClientHandler implements Runnable{
                     //TODO
                     break;
                 case PictoProtocols.DISCONNECT:
+                    if (room != null) {
+                        //TODO dc user from current room
+                    }else {
+                        printWriter.println("You are currently not in a room. " +
+                                "\nUse the quit command to disconnect from the server");
+                        printWriter.flush();
+                    }
+                    break;
+
+                case PictoProtocols.QUIT:
+                    //TODO Check if user is connected to a room, if so dc from room
                     try {
                         this.scanner.close();
                         this.printWriter.close();
                         this.client.close();
-                    }catch (IOException io){
+                    } catch (IOException io) {
                         System.out.println(io.getLocalizedMessage());
                     }
                     this.isConnected = false;
+
                     break;
+
                 default:
                     printWriter.println(PictoProtocols.ERR + " unknown command, use '/help' to see the available commands");
                     printWriter.flush();

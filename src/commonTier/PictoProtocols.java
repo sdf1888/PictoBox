@@ -23,10 +23,16 @@ public interface PictoProtocols {
     public static final String CREATE = "/create";
 
     /**
-     * Disconnects a client from the server
+     * Disconnects a client from the room
      * Usage: "DISCONNECT"
      */
     public static final String DISCONNECT = "/disconnect";
+
+    /**
+     * Disconnects a client from the server
+     * Usage: "DISCONNECT"
+     */
+    public static final String QUIT = "/quit";
 
     /**
      * Sent from client to request a list of rooms
