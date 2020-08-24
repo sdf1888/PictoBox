@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Lobby {
 
     private static ArrayList<ClientSend> users;
-
+    //TODO remove this class, basically just a class to hold an Arraylist
     /**
      * Creates a new lobby list, used when a new room is created.
      */

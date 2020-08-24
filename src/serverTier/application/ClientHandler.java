@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ClientHandler implements Runnable{
+public class ClientHandler extends Thread{
 
     private Socket client;
     //Add attr for server reference
@@ -24,7 +24,7 @@ public class ClientHandler implements Runnable{
             this.scanner = new Scanner(client.getInputStream());
             this.isConnected = true;
             this.room = null;
-            printWriter.println(PictoProtocols.WELCOME + " Connected to the hub server!");
+            printWriter.println(" Connected to the hub server!");
             printWriter.flush();
         }catch (IOException io){
             System.out.println(io.getLocalizedMessage());
@@ -41,6 +41,7 @@ public class ClientHandler implements Runnable{
                     //TODO
                     //When user joins a room, if they're in a room already they must disconnect from their current room
                     //Check for if room exists, if not inform client
+                    //When user joins room, stop thread to save cycles
                     break;
                 case PictoProtocols.CREATE:
                     //TODO

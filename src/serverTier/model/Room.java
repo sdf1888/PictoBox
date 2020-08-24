@@ -31,6 +31,7 @@ public class Room implements Runnable{
     public void disconnect(ClientHandler client){
         this.clients.remove(client);
         //TODO check for remaining users, if none left close room and connections
+        //TODO When users leave create a new client handler
     }
 
     public String getName() { return this.roomName; }
